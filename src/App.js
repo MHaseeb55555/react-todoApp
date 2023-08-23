@@ -10,19 +10,29 @@ function App() {
   let [text, setText] = useState('');
   let [list, setList] = useState([]);
 
-  let update = () => {
+  let add = () => {
     list.push(text);
     setList([...list]);
+    setText('');
   }
 
+  let clear = () => {
+    setList([]);
 
-  let edit = () => {
-    let update = prompt('ENTER NEW VALUE')
+  };
+
+
+  let edit = (i) => {
+    let update = prompt('ENTER NEW VALUE');
+    list[i] = update;
+    setList([...list]);
 
   }
 
-  let dlt = (x) => {
-    x.value = '';
+  let del = (i) => {
+    //  list[i]='';
+    list.splice(i, 1);
+    setList([...list]);
 
 
   }
@@ -30,19 +40,22 @@ function App() {
 
 
   return (
-    <div style={{textAlign:'center'}}>
+    <div style={{ textAlign: 'center', margin: '4em' }}>
 
-      <h1 style={{background:'blue',color:'wheat'}}>TODO APP</h1>
+      <h1 style={{ background: 'blue', color: 'wheat' }}>TODO APP</h1>
 
-      <input onChange={(e) => setText(e.target.value)} />
-      <button onClick={update}>ADD</button>
+      <input value={text} onChange={(e) => setText(e.target.value)} />
+      <button style={{margin:'1em'}} onClick={add}>ADD</button>
+      <button onClick={clear}>DELETE ALL</button>
 
       {list.map((x, i) => {
 
 
         return (
           <div>
-            <p key={i}>  {i + 1}. {x} <button onClick={dlt}>DELETE</button> <button onClick={edit}>EDIT</button> </p>
+            <p key={i}>  {i + 1}. {x}
+              <button style={{margin:'1em'}} onClick={() => (del(i))}>DELETE</button>
+              <button onClick={() => (edit(i))}>EDIT</button> </p>
 
 
 
